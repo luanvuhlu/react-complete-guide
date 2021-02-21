@@ -1,0 +1,14 @@
+.cockpit {
+    width: 130px;
+    height: 30px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.cockpit.on {
+    background-color: lightcoral;
+}
+
+.cockpit.off {
+    background-color: red;
+}

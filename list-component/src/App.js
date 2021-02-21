@@ -8,31 +8,26 @@ class App extends React.Component {
 
   state = {
     persons: [
-      { name: "Luan", age: 30 },
-      { name: "Thu", age: 40 },
-      { name: "Hang", age: 20 }
+      { name: "Luan", age: 30, id: 1 },
+      { name: "Thu", age: 40, id: 2 },
+      { name: "Hang", age: 20, id: 3 }
     ],
-    showPersons: false,
+    showPersons: true,
   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        { name: newName, age: 50 },
-        { name: newName, age: 10 },
-        { name: newName, age: 99 }
-      ]
-    })
+  deleteHandler = (id) => {
+    let persons = [...this.state.persons];
+    persons = persons.filter(person => person.id !== id);
+    this.setState({ persons })
   }
 
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: event.target.value, age: 50 },
-        { name: event.target.value, age: 10 },
-        { name: event.target.value, age: 99 }
-      ]
-    })
+  nameChangeHandler = (event, id) => {
+    let persons = [...this.state.persons];
+    const index = persons.findIndex(person => person.id === id);
+    let person = { ...persons[index] };
+    person.name = event.target.value;
+    persons[index] = person;
+    this.setState({ persons })
   }
 
   togglePersonHandler = () => {
@@ -51,11 +46,11 @@ class App extends React.Component {
         {
           this.state.persons.map(person =>
           (<Person
-            key={person.name}
+            key={person.id}
             name={person.name}
             age={person.age}
-            click={this.switchNameHandler.bind(this, "Juliet")}
-            changed={this.nameChangeHandler} />
+            click={this.deleteHandler.bind(this, person.id)}
+            changed={(e) => this.nameChangeHandler(e, person.id)} />
           )
           )
         }
